@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package auth;
 
+import "sso/validate.proto";
+
 option go_package = "go-auth-grpc.sso.v1;ssov1";
 
 service Auth {
@@ -11,8 +13,8 @@ service Auth {
 }
 
 message RegisterRequest {
-  string email = 1;
-  string password = 2;
+  string email = 1 [(validate.rules).string.email = true];
+  string password = 2 [(validate.rules).string = {min_len: 8, max_len: 255}];
 }
 
 message RegisterResponse {
@@ -20,9 +22,9 @@ message RegisterResponse {
 }
 
 message LoginRequest {
-  string email = 1;
-  string password = 2;
-  int32 app_id = 3;
+  string email = 1 [(validate.rules).string.email = true];
+  string password = 2 [(validate.rules).string = {min_len: 8, max_len: 255}];
+  int32 app_id = 3 [(validate.rules).int32.gt = 0];
 }
 
 message LoginResponse {
@@ -30,7 +32,7 @@ message LoginResponse {
 }
 
 message IsAdminRequest {
-  int64 user_id = 1;
+  int64 user_id = 1 [(validate.rules).int64.gt = 0];
 }
 
 message IsAdminResponse {
