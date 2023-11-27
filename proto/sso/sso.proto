@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package auth;
 
-import "sso/validate.proto";
+import "validate/validate.proto";
 
 option go_package = "go-auth-grpc.sso.v1;ssov1";
 
